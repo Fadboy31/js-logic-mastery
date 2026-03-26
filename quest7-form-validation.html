@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quest 7 – Objects</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111318;
+      color: #e2e8f0;
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #f6c90e;
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      color: #555;
+      margin-bottom: 40px;
+      font-size: 0.82rem;
+    }
+
+    .section {
+      background: #1a1d24;
+      border: 1px solid #2a2d35;
+      border-left: 3px solid #f6c90e;
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 0.95rem;
+      color: #f6c90e;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .section p {
+      font-size: 0.82rem;
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .output-box {
+      background: #0d0f13;
+      border: 1px solid #1e2028;
+      border-radius: 4px;
+      padding: 16px;
+      font-size: 0.85rem;
+      color: #ccc;
+      min-height: 48px;
+    }
+
+    .output-box span { display: block; margin-bottom: 5px; line-height: 1.7; }
+    .key   { color: #f6c90e; }
+    .val   { color: #56d8b1; }
+    .label { color: #888; }
+    .badge {
+      display: inline-block;
+      background: #1a3a2a;
+      color: #56d8b1;
+      border: 1px solid #56d8b1;
+      border-radius: 3px;
+      font-size: 0.72rem;
+      padding: 1px 7px;
+      margin-left: 8px;
+    }
+    .badge.out {
+      background: #3a1a1a;
+      color: #ff6b6b;
+      border-color: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quest 7 — Objects</h1>
+  <p class="subtitle">Create &nbsp;|&nbsp; Access &nbsp;|&nbsp; Update &nbsp;|&nbsp; Loop</p>
+
+  <!-- PART A: Create an object -->
+  <div class="section">
+    <h2>Part A — Create an Object</h2>
+    <p>An object groups related data together using key: value pairs</p>
+    <div class="output-box" id="create-output"></div>
+  </div>
+
+  <!-- PART B: Access properties -->
+  <div class="section">
+    <h2>Part B — Access Properties</h2>
+    <p>Two ways to read a value: dot notation (user.name) or bracket notation (user["name"])</p>
+    <div class="output-box" id="access-output"></div>
+  </div>
+
+  <!-- PART C: Add / change properties -->
+  <div class="section">
+    <h2>Part C — Add & Change Properties</h2>
+    <p>You can add new keys or update existing ones at any time</p>
+    <div class="output-box" id="update-output"></div>
+  </div>
+
+  <!-- PART D: Objects in arrays -->
+  <div class="section">
+    <h2>Part D — Objects Inside Arrays</h2>
+    <p>Arrays can hold objects — loop through with forEach to read each one</p>
+    <div class="output-box" id="array-output"></div>
+  </div>
+
+  <!-- PART E: Practice -->
+  <div class="section">
+    <h2>Part E — Practice: Products (filter in-stock items)</h2>
+    <p>Array of 3 product objects → log only the ones where inStock is true</p>
+    <div class="output-box" id="practice-output"></div>
+  </div>
+
+  <script>
+
+    // ─────────────────────────────────────
+    // PART A: Create an object
+    // An object uses curly braces {}
+    // Inside: key: value pairs, separated by commas
+    // ─────────────────────────────────────
+    const user = {
+      name: 'Alex',
+      age: 25,
+      email: 'alex@example.com',
+      isAdmin: false
+    };
+
+    document.getElementById('create-output').innerHTML = `
+      <span><span class="label">const user = {</span></span>
+      <span>&nbsp;&nbsp;<span class="key">name:</span>    <span class="val">"${user.name}"</span></span>
+      <span>&nbsp;&nbsp;<span class="key">age:</span>     <span class="val">${user.age}</span></span>
+      <span>&nbsp;&nbsp;<span class="key">email:</span>   <span class="val">"${user.email}"</span></span>
+      <span>&nbsp;&nbsp;<span class="key">isAdmin:</span> <span class="val">${user.isAdmin}</span></span>
+      <span><span class="label">}</span></span>
+    `;
+
+
+    // ─────────────────────────────────────
+    // PART B: Access properties
+    // Dot notation:     user.name
+    // Bracket notation: user["name"]  ← useful when key is stored in a variable
+    // ─────────────────────────────────────
+    const dotNotation     = user.name;
+    const bracketNotation = user["name"];
+
+    document.getElementById('access-output').innerHTML = `
+      <span><span class="key">user.name</span>       → <span class="val">"${dotNotation}"</span>   <span class="label">(dot notation)</span></span>
+      <span><span class="key">user["name"]</span>    → <span class="val">"${bracketNotation}"</span>   <span class="label">(bracket notation)</span></span>
+      <span><span class="key">user.age</span>        → <span class="val">${user.age}</span></span>
+      <span><span class="key">user.isAdmin</span>    → <span class="val">${user.isAdmin}</span></span>
+    `;
+
+
+    // ─────────────────────────────────────
+    // PART C: Add and change properties
+    // user.country = "USA"  → adds a NEW key called country
+    // user.age = 26         → UPDATES the existing age value
+    // ─────────────────────────────────────
+    user.country = "USA";   // add new property
+    user.age = 26;          // update existing property
+
+    document.getElementById('update-output').innerHTML = `
+      <span><span class="label">After:  user.country = "USA"  and  user.age = 26</span></span>
+      <span>──────────────────────────────────</span>
+      <span><span class="key">user.age</span>     → <span class="val">${user.age}</span>    <span class="label">(was 25, now updated)</span></span>
+      <span><span class="key">user.country</span> → <span class="val">"${user.country}"</span>  <span class="label">(brand new property)</span></span>
+    `;
+
+
+    // ─────────────────────────────────────
+    // PART D: Objects inside an array
+    // Each item in the array is itself an object {}
+    // forEach loops through each one so we can read its properties
+    // ─────────────────────────────────────
+    const users = [
+      { name: 'Alex',   age: 25 },
+      { name: 'Jordan', age: 30 },
+      { name: 'Sam',    age: 22 }
+    ];
+
+    let arrayHTML = '';
+    users.forEach(u => {
+      arrayHTML += `<span><span class="key">${u.name}</span> — age: <span class="val">${u.age}</span></span>`;
+    });
+    document.getElementById('array-output').innerHTML = arrayHTML;
+
+
+    // ─────────────────────────────────────
+    // PART E: PRACTICE
+    // Array of 3 product objects, each with: name, price, inStock
+    // filter() finds only inStock: true products
+    // forEach() logs each one to the page
+    // ─────────────────────────────────────
+    const products = [
+      { name: 'Laptop',     price: 999,  inStock: true  },
+      { name: 'Headphones', price: 49,   inStock: false },
+      { name: 'Keyboard',   price: 79,   inStock: true  }
+    ];
+
+    const inStockProducts = products.filter(product => product.inStock === true);
+
+    let practiceHTML = `<span class="label">All products: ${products.map(p => p.name).join(', ')}</span>`;
+    practiceHTML    += `<span class="label">────────────────────────────────</span>`;
+    practiceHTML    += `<span class="label">In-stock only:</span>`;
+
+    inStockProducts.forEach(product => {
+      practiceHTML += `
+        <span>
+          <span class="key">${product.name}</span>
+          — $<span class="val">${product.price}</span>
+          <span class="badge">IN STOCK</span>
+        </span>`;
+    });
+
+    // Also show out-of-stock for context
+    const outOfStock = products.filter(p => p.inStock === false);
+    outOfStock.forEach(product => {
+      practiceHTML += `
+        <span>
+          <span class="key">${product.name}</span>
+          — $<span class="val">${product.price}</span>
+          <span class="badge out">OUT OF STOCK</span>
+        </span>`;
+    });
+
+    document.getElementById('practice-output').innerHTML = practiceHTML;
+
+  </script>
+</body>
+</html>
