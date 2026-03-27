@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Manager</title>
+</head>
+<body>
+
+  <h2>📦 Product Inventory</h2>
+
+  <!-- Add Product -->
+  <input type="text" id="name" placeholder="Product Name">
+  <input type="number" id="price" placeholder="Price">
+  <label for="category">Category</label>
+  <select id="category">
+    <option>Electronics</option>
+    <option>Clothing</option>
+    <option>Food</option>
+  </select>
+  <label>
+    In Stock <input type="checkbox" id="inStock">
+  </label>
+  <button onclick="addProduct()">Add Product</button>
+
+  <hr>
+
+  <!-- Filters -->
+  <button onclick="filterCategory('All')">All</button>
+  <button onclick="filterCategory('Electronics')">Electronics</button>
+  <button onclick="filterCategory('Clothing')">Clothing</button>
+  <button onclick="filterCategory('Food')">Food</button>
+
+  <label>
+    Show In-Stock Only
+    <input type="checkbox" id="stockFilter" onchange="displayProducts()">
+  </label>
+
+  <br><br>
+
+  <!-- Search -->
+  <input type="text" id="search" placeholder="Search..." oninput="displayProducts()">
+
+  <br><br>
+
+  <!-- Sort -->
+  <button onclick="sortByPrice()">Sort by Price</button>
+
+  <h3>Total Value: $<span id="total">0</span></h3>
+
+  <ul id="productList"></ul>
+
+  <script>
+    let products = [
+      { name: "Laptop", price: 800, category: "Electronics", inStock: true },
+      { name: "Shirt", price: 30, category: "Clothing", inStock: true },
+      { name: "Apple", price: 2, category: "Food", inStock: false }
+    ];
+
+    let currentCategory = "All";
+
+    function displayProducts() {
+      const list = document.getElementById("productList");
+      const search = document.getElementById("search").value.toLowerCase();
+      const stockOnly = document.getElementById("stockFilter").checked;
+
+      list.innerHTML = "";
+
+      const filtered = products.filter(p => {
+        return (
+          (currentCategory === "All" || p.category === currentCategory) &&
+          (!stockOnly || p.inStock) &&
+          p.name.toLowerCase().includes(search)
+        );
+      });
+
+      filtered.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = `${p.name} - $${p.price} (${p.category}) ${p.inStock ? "✅" : "❌"}`;
+        list.appendChild(li);
+      });
+
+      // Total value
+      const total = filtered.reduce((sum, p) => sum + p.price, 0);
+      document.getElementById("total").textContent = total;
+    }
+
+    function addProduct() {
+      const name = document.getElementById("name").value;
+      const price = parseFloat(document.getElementById("price").value);
+      const category = document.getElementById("category").value;
+      const inStock = document.getElementById("inStock").checked;
+
+      if (!name || isNaN(price)) {
+        alert("Enter valid data");
+        return;
+      }
+
+      products.push({ name, price, category, inStock });
+      displayProducts();
+    }
+
+    function filterCategory(category) {
+      currentCategory = category;
+      displayProducts();
+    }
+
+    function sortByPrice() {
+      products.sort((a, b) => a.price - b.price);
+      displayProducts();
+    }
+
+    displayProducts();
+  </script>
+
+</body>
+</html>
