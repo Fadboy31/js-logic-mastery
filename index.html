@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade Manager Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>⚡ GM Pro</h2>
+    <nav>
+      <p>Dashboard</p>
+      <p>Students</p>
+      <p>Analytics</p>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <header class="topbar">
+      <h1>🎓 Student Dashboard</h1>
+      <div id="stats"></div>
+    </header>
+
+    <section class="controls">
+      <input type="text" id="name" placeholder="Student Name">
+      <input type="text" id="scores" placeholder="Scores (80,90,70)">
+      <button onclick="addStudent()">Add</button>
+
+      <input type="text" id="search" placeholder="Search..." oninput="displayStudents()">
+
+      <label for="gradeFilter">Grade Filter:</label>
+      <select id="gradeFilter" onchange="displayStudents()" aria-label="Filter by grade">
+        <option value="All">All</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="F">F</option>
+      </select>
+    </section>
+
+    <section id="studentList" class="grid"></section>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
